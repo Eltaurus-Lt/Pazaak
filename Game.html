@@ -42,6 +42,8 @@ body {
   --card-yellow2: #6d5f1f;
 
   --beveled-edge:  conic-gradient(from 45deg, #473c30, #585645, #d6cdb7, #453b32, #473c30) border-box;
+  --elevated-edge:  conic-gradient(from 110deg, #473c30, #585645, #d6cdb7, #453b32, #473c30) border-box;
+
 }
 
 .card {
@@ -237,7 +239,17 @@ body {
   gap: 7px;9px;
 
   padding-top: 9px;
-  box-sizing: border-box;
+
+  border: 3px solid transparent;
+  border-radius: 4px;
+  background:
+      linear-gradient(-55deg, #0a0a0a 52%, #2a2a2a 55%, #0a0a0a 80% ) padding-box,
+      var(--elevated-edge);
+  background-position: 0 15px;
+  outline: 2px solid #625a4d;
+  outline-offset: -3px;
+
+  box-shadow: -1px 1px 2px #22221c66;
 }
 .wins:not(.wins ~ .wins) {
   right: calc(50% + 272px);
