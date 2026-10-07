@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+<template>
+  <div class="card">
+    <span></span>
+  </div> 
+</template>
+
+<style>
+
+body {
+  background: color-mix(in lab, #707163 50%, #5e5a4f);
+  scale: max(calc(100vh / 500px), 1);
+  font-family: monospace;
+  font-size: 12px;
+  font-weight: 500;
+  width: 100%;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+
+  width: 60px;
+  height: 75px;
+  box-sizing: border-box;
+
+  border: solid 7px #9f8c7a;
+  border-radius: 5px;
+}
+
+.card span {
+  position: absolute;
+  top: 21px;
+  left: 50%;
+  translate: -50% 0;
+
+  display: flex;
+  width: 44px;
+  height: 19px;
+  background: #1f1f1f;
+  color: white;
+
+  border: solid 2px #9f8c7a;
+  border-radius: 2px;
+  box-sizing: content-box;
+}
+
+.table {
+  position: absolute;
+  background: #524e46;
+  
+  top: 50px;
+  height: 240px;
+  width: 250px;
+
+  border-radius: 20px;
+  border: solid 5px #262621;
+}
+
+.table:not(.table ~ .table) {
+  right: calc(50% + 9px);
+}
+.table ~ .table {
+  left: calc(50% + 9px);
+}
+
+.hand {
+  position: absolute;
+  background: #595649;
+  
+  top: 305px;
+  width: 285px;
+  height: 130px;
+
+  border-radius: 5px;
+  border-top: solid 20px #0a0a0a; 
+  border-bottom: solid 20px #0a0a0a; 
+}
+.hand:not(.hand ~ .hand) {
+  right: calc(50% + 9px);
+  border-top-left-radius: 20px;
+}
+.hand ~ .hand {
+  left: calc(50% + 9px);
+  border-top-right-radius: 20px;
+}
+
+.turn {
+  background: #4a4a4a;
+  border: solid 1px black;
+  border-radius: 100%;
+  position: absolute;
+  width: 39px;
+  top: 10px;
+  aspect-ratio: 1;
+}
+.turn.on {
+  background: #c91f1f;
+}
+.turn:not(.turn ~ .turn) {
+  right: calc(50% + 250px);
+}
+.turn ~ .turn {
+  left: calc(50% + 250px);
+}
+
+.wins {
+  height: 120px;
+  width: 22px;
+  top: 75px;
+
+  background: #0a0a0a;
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  gap: 7px;9px;
+
+  padding-top: 9px;
+  box-sizing: border-box;
+}
+.wins:not(.wins ~ .wins) {
+  right: calc(50% + 272px);
+  border-bottom-left-radius: 100% 30%;
+}
+.wins ~ .wins {
+  left: calc(50% + 272px);
+  border-bottom-right-radius: 100% 30%;
+}
+
+.wins div {
+  width: 18px;
+  aspect-ratio: 1;
+
+  background: #6b6b6b;
+  
+  border-radius: 100%;
+
+  outline: 2px solid #0a0a0a;
+  outline-offset: -4px;
+}
+
+.wins:is([count="1"],[count="2"],[count="3"]) div:nth-child(1),
+.wins:is([count="2"],[count="3"]) div:nth-child(2),
+.wins:is([count="3"]) div:nth-child(3) {
+  background: #c91f1f;
+}
+
+
+.sum {
+  top: 20px;
+  width: 41px;
+  height: 24px;
+  color: white;
+  background: #0a0a0a;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+
+  border-radius: 20px;
+  border: solid 1px #8e8878;
+}
+.sum:not(.sum ~ .sum) {
+  right: calc(50% + 4px);
+}
+.sum ~ .sum {
+  left: calc(50% + 4px);
+}
+
+</style>
+</head>
+<body>
+
+<div class="turn"></div>
+<div class="wins" count="1"><div></div><div></div><div></div></div>
+<div class="sum"></div>
+<div class="sum"></div>
+<div class="wins" count="2"><div></div><div></div><div></div></div>
+<div class="turn"></div>
+<div class="table"></div>
+<div class="table"></div>
+<div class="hand"></div>
+<div class="hand"></div>
+
+
+</body>
+</html>
