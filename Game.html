@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 
-<template>
+<template id="cardTemplate">
   <div class="card">
     <span></span>
   </div> 
@@ -11,14 +11,37 @@
 
 <style>
 
+html, body {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+
 body {
-  background: color-mix(in lab, #707163 50%, #5e5a4f);
-  scale: max(calc(100vh / 500px), 1);
+  background: color-mix(in lab, color-mix(in lab, #707163 50%, #5e5a4f) 70%, #4e463e);
+  scale: max(calc(98vh / 480px), 1);
+  translate: 0 2vh;
+  width: 100vw;
+  margin: 0;
+  overflow: hidden;
+
   font-family: monospace;
   font-size: 12px;
   font-weight: 500;
-  width: 100%;
-  overflow: hidden;
+  color: white;
+
+  --card-green: #49df5f;
+  --card-green2: #1f6d21;
+  --card-blue: #4a6eda;
+  --card-blue2: #1f2e74;
+  --card-red: #d94a49;
+  --card-red2: #792325; 
+  --card-yellow: #dec54a;
+  --card-yellow2: #6d5f1f;
+
+  --beveled-edge:  conic-gradient(from 45deg, #473c30, #585645, #d6cdb7, #453b32, #473c30) border-box;
 }
 
 .card {
@@ -29,24 +52,73 @@ body {
   box-sizing: border-box;
 
   border: solid 7px #9f8c7a;
+  border-bottom-width: 0;
   border-radius: 5px;
+
+  --color1: var(--card-green);
+  --color2: var(--card-green2);
+
+  background: linear-gradient(to right, var(--color2), var(--color1) 50%, var(--color3, var(--color1)) 50%, var(--color4, var(--color2)));
+
+  box-shadow: -1px 1px 2px #0005;
+  cursor: pointer;
+}
+
+.card.p {
+  --color1: var(--card-blue);
+  --color2: var(--card-blue2);
+}
+.card.m:not(.p) {
+  --color1: var(--card-red);
+  --color2: var(--card-red2);
+}
+.card.p.m {
+  --color3: var(--card-red);
+  --color4: var(--card-red2);
+}
+.card.gold {
+  --color1: var(--card-yellow);
+  --color2: var(--card-yellow2);
 }
 
 .card span {
   position: absolute;
-  top: 21px;
+  top: 16px;13px;
   left: 50%;
   translate: -50% 0;
 
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
   width: 44px;
   height: 19px;
+//  padding-bottom: 1px;
   background: #1f1f1f;
-  color: white;
+
+  text-shadow: .75px .75px 0 #8889;
 
   border: solid 2px #9f8c7a;
   border-radius: 2px;
   box-sizing: content-box;
+
+  box-shadow: -1px 0.5px 1.5px #584a41;
+  transform: translateX(1px);
+}
+
+.card::before {
+  content: '';
+  display: block;
+  height: 26px;27px;
+  aspect-ratio: 1;
+  position: absolute;
+  background: #9f8c7a;
+  box-shadow: -1px 0.5px 1.5px #584a41;
+
+  left: 50%;
+  translate: -50% 15px;11px;
+  rotate: 45deg;
 }
 
 .table {
@@ -55,17 +127,28 @@ body {
   
   top: 50px;
   height: 240px;
-  width: 250px;
+  width: 235px;
+  padding-top: 3px;
 
   border-radius: 20px;
-  border: solid 5px #262621;
+  border: solid 2px #463a32;
+  box-shadow: inset -2px 4px 1.5px #232222;
+
+  display: grid;
+  grid-template-columns: repeat(3, 69px);
+  grid-template-rows: repeat(3, 79px);
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
 }
 
 .table:not(.table ~ .table) {
   right: calc(50% + 9px);
+  padding-left: 15px;
 }
 .table ~ .table {
   left: calc(50% + 9px);
+  padding-right: 15px;
 }
 
 .hand {
@@ -74,11 +157,20 @@ body {
   
   top: 305px;
   width: 285px;
-  height: 130px;
+  height: 90px;
+  padding: 8px 2px 0;
 
   border-radius: 5px;
   border-top: solid 20px #0a0a0a; 
-  border-bottom: solid 20px #0a0a0a; 
+  border-bottom: solid 35px #0a0a0a; 
+
+  outline: solid 0.5px #27221e;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  justify-content: center;
+  justify-items: center;
 }
 .hand:not(.hand ~ .hand) {
   right: calc(50% + 9px);
@@ -90,16 +182,38 @@ body {
 }
 
 .turn {
-  background: #4a4a4a;
-  border: solid 1px black;
+  --color1: #585858;
+  --color2: #494a49;
+  --color3: black;
+  border: solid 1px transparent;
   border-radius: 100%;
   position: absolute;
   width: 39px;
   top: 10px;
   aspect-ratio: 1;
+
+  background:
+      radial-gradient(circle at 50%, var(--color1) 20%, var(--color2) 60%, var(--color3) 100%) padding-box,
+      var(--beveled-edge);
+
+  outline: solid 1px #0002;
+  outline-offset: -2px;
 }
 .turn.on {
-  background: #c91f1f;
+  --color1: #f91f1f;
+  --color2: #a81f1f;
+}
+.turn.on::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+
+  background: radial-gradient(circle at 50%, #ea1a, transparent 60%, #a81f1f 80%) padding-box;
+  box-shadow: 0 0 5px #f10f, 0 0 10px #f009, 0 0 15px #f005;
+  mix-blend-mode: plus-lighter;
+  opacity: 0.4;
 }
 .turn:not(.turn ~ .turn) {
   right: calc(50% + 250px);
@@ -142,6 +256,13 @@ body {
   
   border-radius: 100%;
 
+}
+.wins div::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
   outline: 2px solid #0a0a0a;
   outline-offset: -4px;
 }
@@ -150,6 +271,17 @@ body {
 .wins:is([count="2"],[count="3"]) div:nth-child(2),
 .wins:is([count="3"]) div:nth-child(3) {
   background: #c91f1f;
+  background: radial-gradient(circle at 50%, #fa3, #d83 20%, #c91f1f 40%, #c95f1f 60%, #c91f1f 70%);
+  box-shadow: 0 0 1px #c91f1f, 0 0 4px red;
+}
+
+.wins:is([count="1"],[count="2"],[count="3"]) div:nth-child(1)::after,
+.wins:is([count="2"],[count="3"]) div:nth-child(2)::after,
+.wins:is([count="3"]) div:nth-child(3)::after {
+  filter: blur(.2px);
+  outline-width: 2px;
+  outline-color: #600;
+  opacity: .75;
 }
 
 
@@ -157,17 +289,24 @@ body {
   top: 20px;
   width: 41px;
   height: 24px;
-  color: white;
-  background: #0a0a0a;
+
+  font-weight: 600;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
   position: absolute;
 
   border-radius: 20px;
-  border: solid 1px #8e8878;
+  border: solid 1px transparent;
+  outline: 1px solid #8e887822;
+  outline-offset: -1px;
+
+  text-shadow: 0 0 2px #3afa;
+  background:
+      linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+      var(--beveled-edge);
 }
 .sum:not(.sum ~ .sum) {
   right: calc(50% + 4px);
@@ -180,11 +319,11 @@ body {
 </head>
 <body>
 
-<div class="turn"></div>
-<div class="wins" count="1"><div></div><div></div><div></div></div>
-<div class="sum"></div>
-<div class="sum"></div>
-<div class="wins" count="2"><div></div><div></div><div></div></div>
+<div class="turn on"></div>
+<div class="wins" count=2 ><div></div><div></div><div></div></div>
+<div class="sum">2</div>
+<div class="sum">12</div>
+<div class="wins" count=1 ><div></div><div></div><div></div></div>
 <div class="turn"></div>
 <div class="table"></div>
 <div class="table"></div>
@@ -192,5 +331,52 @@ body {
 <div class="hand"></div>
 
 
+<script>
+const tables = document.querySelectorAll(".table");
+const turnIndicators = document.querySelectorAll(".turn");
+const winCoutners = document.querySelectorAll(".wins");
+const hands = document.querySelectorAll(".hand");
+
+function addCard(parent) {
+  const clone = window.cardTemplate.content.cloneNode(true);
+  const cardL = clone.querySelector(".card");
+  const spanL = clone.querySelector("span");
+
+  spanL.textContent = String(Math.floor(Math.random() * 6) + 1);
+  
+  const rnd = Math.random();
+  switch (true) {
+    case rnd < .5:   
+      spanL.textContent = String(Math.floor(Math.random() * 10) + 1);
+      break;
+    case rnd < .625:
+      cardL.classList.add("p");
+      spanL.textContent = "+" + spanL.textContent;
+      break;
+    case rnd < .75:
+      cardL.classList.add("m");
+      spanL.textContent = "-" + spanL.textContent;
+      break;
+    case rnd < .875:
+      cardL.classList.add("p");
+      cardL.classList.add("m");
+      spanL.textContent = "±" + spanL.textContent;
+      break;
+    case true:
+      cardL.classList.add("gold");
+      const types = ["D", "±1T", "3&6", "2&4", "±½"];
+      spanL.textContent = types[Math.floor(Math.random() * types.length)];
+      break;    
+  }
+  
+  parent.appendChild(clone);
+}
+ 
+for (let i=0; i < 7; i++) addCard(tables[0]);
+for (let i=0; i < 9; i++) addCard(tables[1]);
+for (let i=0; i < 1; i++) addCard(hands[0]);
+for (let i=0; i < 4; i++) addCard(hands[1]);
+
+</script>
 </body>
 </html>
